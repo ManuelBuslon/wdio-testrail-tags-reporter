@@ -15,6 +15,13 @@ export enum Status {
   Failed = 5,
 }
 
+export const StatusP = {
+  passed: 1,
+  skipped: 2,
+  pending: 3,
+  failed: 5,
+};
+
 export interface TestRailResult {
   case_id: number;
   status_id: Status;

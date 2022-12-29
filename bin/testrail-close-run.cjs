@@ -2,10 +2,10 @@
 
 // @ts-check
 
-import { getAuthorization } from "./get-config";
+import { getAuthorization } from "./get-config.cjs";
 
 const arg = require("arg");
-const { getTestRunId, getTestRailConfig } = require("../src/get-config");
+const { getTestRunId, getTestRailConfig } = require("./get-config.cjs");
 
 const args = arg(
   {

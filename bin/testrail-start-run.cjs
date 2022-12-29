@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 // @ts-check
-import fs = require("fs");
-import arg = require("arg");
-import got = require("got");
-import globby = require("globby");
-import { getTestRailConfig, getAuthorization } from "./get-config";
-import { findCases } from "./find-cases";
+const fs = require("fs");
+const arg = require("arg");
+const got = require("got");
+const globby = require("globby");
+const { getTestRailConfig, getAuthorization } = require("./get-config.cjs");
+const { findCases } = require("./find-cases.cjs");
 
 const args = arg(
   {
@@ -69,13 +69,7 @@ async function startRun({ testRailInfo, name, description, caseIds }) {
   const addRunUrl = `${testRailInfo.host}/index.php?/api/v2/add_run/${testRailInfo.projectId}`;
   const authorization = getAuthorization(testRailInfo);
 
-  const json: {
-    name: string;
-    description: string;
-    include_all?: boolean;
-    case_ids?: unknown[];
-    suite_id?: number;
-  } = {
+  const json = {
     name,
     description,
   };

@@ -27,6 +27,11 @@ TESTRAIL_SUITEID=...
 ## Usage
 Ensure that your testrail installation API is enabled and generate your API keys. See http://docs.gurock.com/
 
+npx testrail-start-run \
+  --name "test run" \
+  --description "test run description" \
+  --spec "cypress/integration/featureA/**.js"
+  
 Run mocha with `mocha-testrail-reporter-tags`:
 
 ```shell

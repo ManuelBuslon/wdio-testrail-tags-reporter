@@ -1,8 +1,8 @@
-import fs = require("fs");
-import {
+const fs = require("fs");
+const {
   getTestNames,
   filterByEffectiveTags,
-} from "find-test-names-tags-mocha";
+} = require("find-test-names-tags-mocha");
 
 /**
  * Returns the TestRail case id number (if any) from the given full test title
@@ -67,4 +67,4 @@ function findCases(specs, readSpec = fs.readFileSync, tagged, negativeTagged) {
   return uniqueCaseIds;
 }
 
-export { findCases, getTestCases, findCasesInSpec };
+module.exports = { findCases, getTestCases, findCasesInSpec };

@@ -57,14 +57,7 @@ function getAuthorization(testRailInfo) {
   return authorization;
 }
 
-function getTestRunId(config = null, env = process.env) {
-  // try the Cypress env object
-  if (config) {
-    if (typeof config.env.testRailRunId === "number") {
-      return config.env.testRailRunId;
-    }
-  }
-
+function getTestRunId(config, env = process.env) {
   // try to read the test run id from the environment
   if ("TESTRAIL_RUN_ID" in env && env.TESTRAIL_RUN_ID) {
     return parseInt(env.TESTRAIL_RUN_ID);
@@ -78,6 +71,13 @@ function getTestRunId(config = null, env = process.env) {
     console.log('read "%s"', s);
     return parseInt(s);
   }
+
+  return 0;
 }
 
-export { hasConfig, getTestRailConfig, getAuthorization, getTestRunId };
+module.exports = {
+  hasConfig,
+  getTestRailConfig,
+  getAuthorization,
+  getTestRunId,
+};
