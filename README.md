@@ -1,32 +1,43 @@
 #Testrail Reporter for Mocha
 
-[![npm version](https://badge.fury.io/js/mocha-testrail-reporter.svg)](https://badge.fury.io/js/mocha-testrail-reporter)
-
 Pushes test results into Testrail system.
-
-> **NOTE** : Version 2.0.x is backward compatible with v1 but has been updated to latest dependencies. The V2 choice is to ensure that existing users are not affected!
 
 ## Installation
 
 ```shell
-$ npm install mocha-testrail-reporter --save-dev
+$ npm install mocha-testrail-reporter-tags --save-dev
+```
+
+## Environment variables
+
+When running the Cypress tests on CI, you need to provide the TestRail server variables through the [process (OS) environment variables](https://en.wikipedia.org/wiki/Environment_variable). The following variables should be set:
+
+```
+TESTRAIL_HOST=
+TESTRAIL_USERNAME=
+; the user password or API key for the user
+; API key is preferred
+TESTRAIL_PASSWORD=
+; Note: the project ID is not very sensitive value
+TESTRAIL_PROJECTID=
+; if you use suites, add a suite ID (with S or without)
+TESTRAIL_SUITEID=...
 ```
 
 ## Usage
 Ensure that your testrail installation API is enabled and generate your API keys. See http://docs.gurock.com/
 
-Run mocha with `mocha-testrail-reporter`:
+Run mocha with `mocha-testrail-reporter-tags`:
 
 ```shell
-$ mocha test --reporter mocha-testrail-reporter --reporter-options domain=instance.testrail.net,username=test@example.com,password=12345678,projectId=1,suiteId=1
+$ mocha test --reporter mocha-testrail-reporter-tags
 ```
 
 or use a mocha.options file
 ```shell
 mocha --opts mocha-testrail.opts build/test
 --recursive
---reporter mocha-testrail-reporter
---reporter-options domain=instance.testrail.net,username=test@example.com,password=12345678,projectId=1,suiteId=1
+--reporter mocha-testrail-reporter-tags
 --no-exit
 ```
 
@@ -39,20 +50,6 @@ it("Authenticate a valid user C321", () => {})
 ```
 
 Only passed or failed tests will be published. Skipped or pending tests will not be published resulting in a "Pending" status in testrail test run.
-
-## Options
-
-**domain**: *string* domain name of your Testrail instance (e.g. for a hosted instance instance.testrail.net)
-
-**username**: *string* user under which the test run will be created (e.g. jenkins or ci)
-
-**password**: *string* password or API token for user
-
-**projectId**: *number* projet number with which the tests are associated
-
-**suiteId**: *number* suite number with which the tests are associated
-
-**assignedToId**: *number* (optional) user id which will be assigned failed tests
 
 ## Build and test locally
 
@@ -84,3 +81,9 @@ npm run test
 - http://mochajs.org/#mochaopts
 - https://github.com/mochajs/mocha/wiki/Third-party-reporters
 - http://docs.gurock.com/testrail-api2/start
+
+Acknowledgments
+
+* [Gleb Bahmutov](https://github.com/bahmutov), owner of the [find-test-names](https://github.com/bahmutov/find-test-names) repository that was forked.
+
+* [Pierre Awaragi](https://github.com/awaragi), owner of the [mocha-testrail-reporter](https://github.com/awaragi/mocha-testrail-reporter).

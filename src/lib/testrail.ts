@@ -1,5 +1,10 @@
 import request = require("unirest");
 import { TestRailOptions, TestRailResult } from "./testrail.interface";
+import {
+  getAuthorization,
+  getTestRailConfig,
+  getTestRunId,
+} from "./get-config";
 
 /**
  * TestRail basic API wrapper
@@ -22,14 +27,16 @@ export class TestRail {
   }
 
   private _post(api: String, body: any, callback: Function, error?: Function) {
+    const testRailInfo = getTestRailConfig(process.env);
+    const authorization = getAuthorization(testRailInfo);
     request("POST", this.base)
       .query(`/api/v2/${api}`)
       .headers({
         "content-type": "application/json",
+        authorization,
       })
       .type("json")
       .send(body)
-      .auth(this.options.username, this.options.password)
       .end((res) => {
         if (res.error) {
           console.log("Error: %s", JSON.stringify(res.body));
@@ -44,13 +51,15 @@ export class TestRail {
   }
 
   private _get(api: String, callback: Function, error?: Function): void {
+    const testRailInfo = getTestRailConfig(process.env);
+    const authorization = getAuthorization(testRailInfo);
     request("GET", this.base)
       .query(`/api/v2/${api}`)
       .headers({
         "content-type": "application/json",
+        authorization,
       })
       .type("json")
-      .auth(this.options.username, this.options.password)
       .end((res) => {
         if (res.error) {
           console.log("Error: %s", JSON.stringify(res.body));
@@ -99,38 +108,21 @@ export class TestRail {
    * @param {TestRailResult[]} results
    * @param {Function} callback
    */
-  public publish(
-    name: string,
-    description: string,
-    results: TestRailResult[],
-    callback?: Function
-  ): void {
+  public publish(results: TestRailResult[], callback?: Function): void {
     console.log(`Publishing ${results.length} test result(s) to ${this.base}`);
 
+    const runId = getTestRunId();
+    console.log(`Results published to ${this.base}?/runs/view/${runId}`);
     this._post(
-      `add_run/${this.options.projectId}`,
+      `add_results_for_cases/${runId}`,
       {
-        suite_id: this.options.suiteId,
-        name: name,
-        description: description,
-        assignedto_id: this.options.assignedToId,
-        include_all: true,
+        results: results,
       },
       (body) => {
-        const runId = body.id;
-        console.log(`Results published to ${this.base}?/runs/view/${runId}`);
-        this._post(
-          `add_results_for_cases/${runId}`,
-          {
-            results: results,
-          },
-          (body) => {
-            // execute callback if specified
-            if (callback) {
-              callback(body);
-            }
-          }
-        );
+        // execute callback if specified
+        if (callback) {
+          callback(body);
+        }
       }
     );
   }

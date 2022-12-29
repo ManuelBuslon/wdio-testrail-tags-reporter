@@ -83,20 +83,7 @@ ${test.err}`,
           "No testcases were matched. Ensure that your tests are declared correctly and matches TCxxx"
         );
       }
-      let executionDateTime = new Date().toISOString();
-      let total = this.passes + this.fails + this.pending;
-      let name = `Automated test run ${executionDateTime}`;
-      let description = `Automated test run executed on ${executionDateTime}
-Execution summary:
-Passes: ${this.passes}
-Fails: ${this.fails}
-Pending: ${this.pending}
-Total: ${total}
-
-Execution details:
-${this.out.join("\n")}                     
-`;
-      new TestRail(reporterOptions).publish(name, description, this.results);
+      new TestRail(reporterOptions).publish(this.results);
     });
   }
 
