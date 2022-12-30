@@ -5,6 +5,7 @@ const axios = require("axios");
 import { getTestRailConfig, getAuthorization } from "../bin/get-config.cjs";
 import { findCases } from "../bin/find-cases.cjs";
 import path = require("path");
+import TestRailReporter = require("./reporter.js");
 
 class TestrailWorkerService implements Services.ServiceInstance {
   options;
@@ -170,6 +171,10 @@ class TestrailWorkerService implements Services.ServiceInstance {
       : ".*";
     let mochaDefault = { ...config.mochaOpts, grep: expression };
     config.mochaOpts = mochaDefault;
+    if (config["testrail"]) {
+      config.services.push([TestRailReporter, {}]);
+    }
+    console.log(config);
   }
 
   onComplete(exitCode, config, capabilities) {
