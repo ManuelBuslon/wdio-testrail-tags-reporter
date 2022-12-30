@@ -151,6 +151,7 @@ class TestrailWorkerService implements Services.ServiceInstance {
     let tagExp = "";
     let notTagExp = "";
     let tags = false;
+    let onlyNegative = false;
     if (config["tags"]) {
       const tagged = config["tags"].replaceAll(",", "|");
       tagExp = `.*?(${tagged})`;
@@ -159,9 +160,14 @@ class TestrailWorkerService implements Services.ServiceInstance {
     if (config["excludeTags"]) {
       const excludeTags = config["excludeTags"].replaceAll(",", "|");
       notTagExp = `(?!(.*(${excludeTags})))`;
+      if (!tags) {
+        onlyNegative = true;
+      }
       tags = true;
     }
-    const expression = tags ? `-@${notTagExp}${tagExp}` : ".*";
+    const expression = tags
+      ? `${onlyNegative ? "^(?!.*-@)|" : ""}-@${notTagExp}${tagExp}`
+      : ".*";
     let mochaDefault = { ...config.mochaOpts, grep: expression };
     config.mochaOpts = mochaDefault;
   }
