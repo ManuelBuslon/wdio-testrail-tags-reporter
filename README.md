@@ -120,9 +120,7 @@ It is possible to use tags for positive or negative matching of tests with the -
 
 
 
-`--tags Smoke,Development
-
- --excludeTags Production,Bug`
+`--tags Smoke,Development --excludeTags Production,Bug`
 
 
 
