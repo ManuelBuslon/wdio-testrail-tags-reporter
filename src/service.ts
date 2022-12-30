@@ -172,9 +172,8 @@ class TestrailWorkerService implements Services.ServiceInstance {
     let mochaDefault = { ...config.mochaOpts, grep: expression };
     config.mochaOpts = mochaDefault;
     if (config["testrail"]) {
-      config.services.push([TestRailReporter, {}]);
+      config.reporters.push([TestRailReporter, {}]);
     }
-    console.log(config);
   }
 
   onComplete(exitCode, config, capabilities) {

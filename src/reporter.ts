@@ -1,7 +1,6 @@
 import { titleToCaseIds } from "./shared";
-import { StatusP, TestRailResult } from "./testrail.interface";
+import { StatusP } from "./testrail.interface";
 import WDIOReporter, { TestStats } from "@wdio/reporter";
-const SpecReporter = require("@wdio/spec-reporter").default;
 const axios = require("axios");
 import {
   getAuthorization,
@@ -12,13 +11,12 @@ import {
 class TestRailReporter extends WDIOReporter {
   private testRailInfo;
   private runId: number;
-  private sync: boolean;
+  private sync: boolean = true;
   private results;
 
   constructor(options) {
     super(options);
     this.results = [];
-    this.sync = false;
 
     this.testRailInfo = getTestRailConfig(process.env);
     axios.defaults.baseURL = `${this.testRailInfo.host}index.php?/api/v2`;
@@ -29,6 +27,7 @@ class TestRailReporter extends WDIOReporter {
 
   onRunnerStart() {
     this.runId = getTestRunId();
+    this.sync = false;
   }
 
   onTestEnd(testStats: TestStats): void {
