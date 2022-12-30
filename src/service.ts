@@ -2,7 +2,11 @@ import type { Capabilities, Options, Services } from "@wdio/types";
 import fs = require("fs");
 import globby = require("globby");
 const axios = require("axios");
-import { getTestRailConfig, getAuthorization } from "../bin/get-config.cjs";
+import {
+  getTestRailConfig,
+  getAuthorization,
+  getTestRunId,
+} from "../bin/get-config.cjs";
 import { findCases } from "../bin/find-cases.cjs";
 import path = require("path");
 import TestRailReporter = require("./reporter.js");
@@ -176,8 +180,13 @@ class TestrailWorkerService implements Services.ServiceInstance {
     }
   }
 
-  onComplete(exitCode, config, capabilities) {
-    console.log("Closing run...");
+  async onComplete(exitCode, config, capabilities) {
+    if (config["closeRun"] && exitCode === 0) {
+      console.log("Closing run...");
+      const runId = getTestRunId();
+      const closeRunUrl = `/close_run/${runId}`;
+      await this.post(closeRunUrl, {});
+    }
   }
 }
 export = TestrailWorkerService;
