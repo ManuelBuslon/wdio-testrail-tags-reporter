@@ -39,7 +39,7 @@
   "dependencies": {
     "@wdio/reporter": "7.28.0",
     "axios": "^1.2.2",
-    "find-test-names-tags-mocha": "^1.0.1",
+    "find-test-names-tags-mocha": "^1.0.2",
     "fs": "^0.0.1-security",
     "globby": "^11"
   },

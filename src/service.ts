@@ -79,6 +79,7 @@ class TestrailWorkerService implements Services.ServiceInstance {
     }
 
     const run = await this.post(addRunUrl, json);
+
     const runId = run.id.toString();
     console.log("Creating run...");
     const filename = path.join(process.cwd(), "runId.txt");
@@ -88,7 +89,7 @@ class TestrailWorkerService implements Services.ServiceInstance {
   async createRun(config) {
     const runName = config["name"] || "Automation run";
     const description = config["description"] || "";
-    let tagged;
+    let tagged = [];
     let negativeTagged = [];
     if (config["tags"]) {
       tagged = config["tags"]
