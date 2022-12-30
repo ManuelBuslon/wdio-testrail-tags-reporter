@@ -1,7 +1,7 @@
 {
   "name": "wdio-testrail-tags-reporter",
   "version": "1.0.10",
-  "description": "A Testrail reporter for mocha utilising TestRail API",
+  "description": "A Testrail reporter for wdio utilising TestRail API",
   "main": "index.js",
   "private": false,
   "keywords": [

@@ -17,8 +17,8 @@ const args = arg(
     // find the specs automatically using
     "--find-specs": Boolean,
     // filter all found specs by the given tag(s)
-    "--tagged": String,
-    "--notTagged": String,
+    "--tags": String,
+    "--excludeTags": String,
     // do not open the test run, just find everything
     "--dry": Boolean,
     // aliases
@@ -122,14 +122,14 @@ if (args["--find-specs"]) {
 
   let tagged;
   let negativeTagged = [];
-  if (args["--tagged"]) {
-    tagged = args["--tagged"]
+  if (args["--tags"]) {
+    tagged = args["--tags"]
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
   }
-  if (args["--notTagged"]) {
-    negativeTagged = args["--notTagged"]
+  if (args["--excludeTags"]) {
+    negativeTagged = args["--excludeTags"]
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);

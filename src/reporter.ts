@@ -1,6 +1,6 @@
 import { titleToCaseIds } from "./shared";
 import { StatusP, TestRailResult } from "./testrail.interface";
-import { TestStats } from "@wdio/reporter";
+import WDIOReporter, { TestStats } from "@wdio/reporter";
 const SpecReporter = require("@wdio/spec-reporter").default;
 const axios = require("axios");
 import {
@@ -9,7 +9,7 @@ import {
   getTestRunId,
 } from "../bin/get-config.cjs";
 
-class TestRailReporter extends SpecReporter {
+class TestRailReporter extends WDIOReporter {
   private testRailInfo;
   private runId: number;
   private sync: boolean;
@@ -19,13 +19,16 @@ class TestRailReporter extends SpecReporter {
     super(options);
     this.results = [];
     this.sync = false;
-    this.runId = getTestRunId();
 
     this.testRailInfo = getTestRailConfig(process.env);
     axios.defaults.baseURL = `${this.testRailInfo.host}index.php?/api/v2`;
     const authorization = getAuthorization(this.testRailInfo);
     axios.defaults.headers.common["Content-Type"] = "application/json";
     axios.defaults.headers.common["Authorization"] = authorization;
+  }
+
+  onRunnerStart() {
+    this.runId = getTestRunId();
   }
 
   onTestEnd(testStats: TestStats): void {
@@ -55,7 +58,7 @@ class TestRailReporter extends SpecReporter {
   }
 
   async onRunnerEnd(runner) {
-    if (this.runId != 0) {
+    if (this.runId != 0 && this.results.length > 0) {
       await this.post(`/add_results_for_cases/${this.runId}`, {
         results: this.results,
       });
