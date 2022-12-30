@@ -27,7 +27,6 @@ class TestRailReporter extends WDIOReporter {
 
   onRunnerStart() {
     this.runId = getTestRunId();
-    this.sync = false;
   }
 
   onTestEnd(testStats: TestStats): void {
@@ -41,6 +40,7 @@ class TestRailReporter extends WDIOReporter {
         });
       });
     }
+    this.sync = false;
   }
 
   get isSynchronised() {
@@ -61,8 +61,8 @@ class TestRailReporter extends WDIOReporter {
       await this.post(`/add_results_for_cases/${this.runId}`, {
         results: this.results,
       });
-      this.sync = true;
     }
+    this.sync = true;
   }
 }
 export = TestRailReporter;

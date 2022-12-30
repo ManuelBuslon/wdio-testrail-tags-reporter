@@ -40,7 +40,7 @@ Import this library in your wdio.conf.js
 
 
 
-`const { 
+    const { 
 
     TestrailService
 
@@ -64,7 +64,7 @@ Ensure that your TestRail installation API is enabled and generate your API keys
 
 
 
-`npx wdio run config/wdio.app.conf.ts \
+    npx wdio run config/wdio.app.conf.ts \
 
     --name "Android automation run - Real device" \
 
@@ -72,7 +72,7 @@ Ensure that your TestRail installation API is enabled and generate your API keys
 
     --spec "src/specs/**.ts" \
 
-    --testrail`
+    --testrail
 
 
 
