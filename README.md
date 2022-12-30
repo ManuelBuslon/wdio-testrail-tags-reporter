@@ -153,6 +153,6 @@ Acknowledgments
 
 
 
-- [Gleb Bahmutov](https://github.com/bahmutov), owner of the [find-test-names](https://github.com/bahmutov/find-test-names) repository that was forked.
+- [Gleb Bahmutov](https://github.com/bahmutov), owner of the [find-test-names](https://github.com/bahmutov/find-test-names).
 
 - [Pierre Awaragi](https://github.com/awaragi), owner of the [mocha-testrail-reporter](https://github.com/awaragi/mocha-testrail-reporter).
