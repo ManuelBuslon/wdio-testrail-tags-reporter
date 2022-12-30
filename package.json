@@ -35,6 +35,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist",
+    "packt": "rimraf dist && tsc && npm pack",
     "test": "mocha dist/test",
     "test:ts": "mocha -r ts-node/register src/test/*",
     "format": "prettier --check ./**/* --write"
@@ -54,6 +55,7 @@
     "mocha": "9.2.2"
   },
   "devDependencies": {
+    "@types/args": "^5.0.0",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
     "@types/node": "^12.20.55",
