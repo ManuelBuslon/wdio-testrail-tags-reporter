@@ -59,6 +59,8 @@ Ensure that your TestRail installation API is enabled and generate your API keys
 
     --testrail
 
+    --includeGitBranch
+
 
 
 - The testrail tag is optional and should only be used if you want to use TestRail integration.
@@ -66,6 +68,8 @@ Ensure that your TestRail installation API is enabled and generate your API keys
 - If you had to stop the execution (hence, the run was not closed), you can run back the execution on the same TestRail run with --dry. This will report the results to the latest open run.
 
 - Use --closeRun to close the run afters the tests
+
+- Include git branch will append the branch name to the run name
 
 Mark your tests names with the IDs of TestRail test cases. Ensure that your test case IDs are separated with a blank space from the test description.
 

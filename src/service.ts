@@ -2,6 +2,7 @@ import type { Capabilities, Options, Services } from "@wdio/types";
 import fs = require("fs");
 import globby = require("globby");
 const axios = require("axios");
+const branchName = require("current-git-branch");
 import {
   getTestRailConfig,
   getAuthorization,
@@ -87,8 +88,11 @@ class TestrailWorkerService implements Services.ServiceInstance {
   }
 
   async createRun(config) {
-    const runName =
+    let runName =
       config["name"] || this.testRailInfo.runName || "Automation run";
+    if (config["includeGitBranch"]) {
+      runName += ` - ${branchName()}`;
+    }
     const description = config["description"] || "";
     let tagged = [];
     let negativeTagged = [];
