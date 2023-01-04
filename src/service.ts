@@ -87,7 +87,8 @@ class TestrailWorkerService implements Services.ServiceInstance {
   }
 
   async createRun(config) {
-    const runName = config["name"] || "Automation run";
+    const runName =
+      config["name"] || this.testRailInfo.runName || "Automation run";
     const description = config["description"] || "";
     let tagged = [];
     let negativeTagged = [];

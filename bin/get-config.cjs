@@ -44,6 +44,7 @@ function getTestRailConfig(env = process.env) {
     password: process.env.TESTRAIL_PASSWORD,
     projectId: process.env.TESTRAIL_PROJECTID,
     suiteId: process.env.TESTRAIL_SUITEID,
+    runName: process.env.TESTRAIL_RUNNAME,
     statusOverride: safelyParseJson(process.env.TESTRAIL_STATUS_OVERRIDE),
   };
 

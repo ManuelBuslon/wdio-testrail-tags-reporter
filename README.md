@@ -22,7 +22,7 @@ You need to provide the TestRail server variables through the [process (OS) envi
 
 
 
-    TESTRAIL_HOST=
+    TESTRAIL_HOST=https://<testrailName>/
 
     TESTRAIL_USERNAME=`
     `; The user password or API key for the user. API key is preferred
@@ -34,35 +34,20 @@ You need to provide the TestRail server variables through the [process (OS) envi
 
     TESTRAIL_SUITEID=...
 
+    TESTRAIL_RUNNAME=...
 
 
 Import this library in your wdio.conf.js
 
-
-
-    const { 
-
-    TestrailService
-
-    } = require("wdio-testrail-tags-reporter");`
-
-
+    const { TestrailService } = require("wdio-testrail-tags-reporter");
 
 Your services should look like this:
 
-
-
 `services: [[TestrailService, {}]],`
-
-
 
 ## Usage
 
-
-
 Ensure that your TestRail installation API is enabled and generate your API keys. See [https://support.gurock.com/hc/en-us/articles/7077039051284-Accessing-the-TestRail-API#authentication-0-0](http://docs.gurock.com/)
-
-
 
     npx wdio run config/wdio.app.conf.ts \
 
@@ -80,14 +65,13 @@ Ensure that your TestRail installation API is enabled and generate your API keys
 
 - If you had to stop the execution (hence, the run was not closed), you can run back the execution on the same TestRail run with --dry. This will report the results to the latest open run.
 
-- User --closeRun to close the run after finishing the tests
+- Use --closeRun to close the run afters the tests
 
 Mark your tests names with the IDs of TestRail test cases. Ensure that your test case IDs are separated with a blank space from the test description.
 
-
+During the run a file runId.txt will be created, this file should be added to gitignore
 
 ### Examples
-
 
 
     it("C123 C124 Authenticate with invalid user", () => {})
