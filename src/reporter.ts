@@ -36,7 +36,8 @@ class TestRailReporter extends WDIOReporter {
         this.results.push({
           case_id: caseId,
           status_id: StatusP[testStats.state],
-          comment: `${testStats.title} (${testStats.duration}ms)`,
+          comment: `${testStats.title} (${testStats.duration}ms)\n\n
+          ${testStats.error ? testStats.error.stack : ""}`,
         });
       });
     }

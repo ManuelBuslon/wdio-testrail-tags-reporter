@@ -1,6 +1,6 @@
 {
   "name": "wdio-testrail-tags-reporter",
-  "version": "1.0.21",
+  "version": "1.0.24",
   "description": "A Testrail reporter for wdio utilising TestRail API",
   "main": "index.js",
   "private": false,
@@ -37,11 +37,13 @@
     "format": "prettier --check ./**/* --write"
   },
   "dependencies": {
+    "@wdio/globals": "^8.3.11",
     "@wdio/reporter": "7.28.0",
     "axios": "^1.2.2",
     "current-git-branch": "^1.1.0",
-    "find-test-names-tags-mocha": "^1.0.2",
+    "find-test-names-tags-mocha": "^1.0.6",
     "fs": "^0.0.1-security",
+    "git-commit-info": "^2.0.1",
     "globby": "^11"
   },
   "peerDependencies": {

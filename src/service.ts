@@ -3,6 +3,7 @@ import fs = require("fs");
 import globby = require("globby");
 const axios = require("axios");
 const branchName = require("current-git-branch");
+const gitCommitInfo = require("git-commit-info");
 import {
   getTestRailConfig,
   getAuthorization,
@@ -11,6 +12,8 @@ import {
 import { findCases } from "../bin/find-cases.cjs";
 import path = require("path");
 import TestRailReporter = require("./reporter.js");
+import { Test } from "@wdio/types/build/Frameworks.js";
+import { runInContext } from "vm";
 
 class TestrailWorkerService implements Services.ServiceInstance {
   options;
@@ -90,8 +93,11 @@ class TestrailWorkerService implements Services.ServiceInstance {
   async createRun(config) {
     let runName =
       config["name"] || this.testRailInfo.runName || "Automation run";
+    if (config["addToName"]) {
+      runName += ` ${config["addToName"]}`;
+    }
     if (config["includeGitBranch"]) {
-      runName += ` - ${branchName()}`;
+      runName += ` - ${branchName()}-${gitCommitInfo().shortHash}`;
     }
     const description = config["description"] || "";
     let tagged = [];
@@ -193,6 +199,10 @@ class TestrailWorkerService implements Services.ServiceInstance {
       const closeRunUrl = `/close_run/${runId}`;
       await this.post(closeRunUrl, {});
     }
+  }
+
+  async beforeTest(test: Test, context: any) {
+    console.log(context.browser);
   }
 }
 export = TestrailWorkerService;
